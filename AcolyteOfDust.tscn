@@ -14,7 +14,7 @@ const JUMP_VELOCITY := -400.0
 var facing_right := true
 var drops = ['skeleton','cow','goblin']
 # Health
-var MaxHealth := 25
+var MaxHealth := 20
 var Health := MaxHealth
 
 # Projectile
