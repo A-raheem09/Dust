@@ -14,7 +14,7 @@ const JUMP_VELOCITY := -400.0
 var facing_right := true
 var drops = ['skeleton','cow','goblin']
 # Health
-var MaxHealth := 50
+var MaxHealth := 25
 var Health := MaxHealth
 
 # Projectile
@@ -43,8 +43,6 @@ func _physics_process(delta):
 func _input(event):
 	if event.is_action_pressed(\"attack_ranged\"):
 		_shoot_plague_ball()
-	if event.is_action_pressed('Sacrifice'):
-		absorb_attack()
 func _shoot_plague_ball():
 	var projectile = projectile_scene.instantiate()
 	Take_Damage(2)
@@ -60,18 +58,7 @@ func _shoot_plague_ball():
 func Take_Damage(damage : int):
 	Health -= damage
 	if Health <= 0:
-		global_position = Vector2(69, 120)
-func absorb_attack():
-	var absorb_range = 10  # example range
-	var facing_dir = (1 if facing_right else -1)  # assume player tracks facing direction
-	var rel = enemy.global_position - global_position
-	# Check if enemy is roughly in front and within range
-	if facing_dir * rel.x > 0 and abs(rel.x) < absorb_range:
-		# Enemy is in front and close enough
-		$AnimatedSprite2D.play('Dust')
-		var heal_amount = enemy.max_hp / 5
-		Health = min(Health + heal_amount, MaxHealth)
-		enemy.queue_free()  # kill the enemy
+		$\".\".global_position = Vector2(69, 120)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6dnq"]
@@ -163,7 +150,6 @@ animations = [{
 
 [node name="Acolyte" type="CharacterBody2D"]
 script = SubResource("GDScript_um2y0")
-projectile_speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -0.8176117)

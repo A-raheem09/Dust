@@ -1,0 +1,172 @@
+[gd_scene load_steps=16 format=3 uid="uid://doji13x65vs60"]
+
+[ext_resource type="Texture2D" uid="uid://bfyd0khgoo1on" path="res://Assets/Acolyte/AcolyteOfDust.png" id="1_um2y0"]
+[ext_resource type="Texture2D" uid="uid://byvhyn62f3bnq" path="res://Assets/Acolyte/AcolyteOfDust-sheet2.png" id="1_xyt0x"]
+[ext_resource type="Texture2D" uid="uid://c7nmx5thbhx1q" path="res://Assets/Acolyte/AcolyteOfDust-sheet.png" id="1_y6dnq"]
+
+[sub_resource type="GDScript" id="GDScript_um2y0"]
+resource_name = "AcolyteOfDust"
+script/source = "extends CharacterBody2D
+
+# Movement
+const SPEED := 150.0
+const JUMP_VELOCITY := -400.0
+var facing_right := true
+var drops = ['skeleton','cow','goblin']
+# Health
+var MaxHealth := 50
+var Health := MaxHealth
+
+# Projectile
+@onready var projectile_scene = preload(\"res://plagueball.tscn\")
+@export var projectile_speed := 400
+func _physics_process(delta):
+	# Gravity
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	# Jump
+	if Input.is_action_just_pressed(\"Up\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Horizontal movement
+	var direction := Input.get_axis(\"Left\", \"Right\")
+	if direction != 0:
+		velocity.x = direction * SPEED
+		$AnimatedSprite2D.play(\"Walk\")
+		facing_right = direction > 0
+		$AnimatedSprite2D.flip_h = not facing_right
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		$AnimatedSprite2D.play(\"default\")
+	move_and_slide()
+
+func _input(event):
+	if event.is_action_pressed(\"attack_ranged\"):
+		_shoot_plague_ball()
+	if event.is_action_pressed('Sacrifice'):
+		absorb_attack()
+func _shoot_plague_ball():
+	var projectile = projectile_scene.instantiate()
+	Take_Damage(2)
+	# Offset in front of player depending on facing direction
+	var offset = Vector2(20, 0) * (1 if facing_right else -1)
+	projectile.global_position = global_position + offset
+	
+	# Set projectile velocity towards mouse
+	var dir = (get_global_mouse_position() - projectile.global_position).normalized()
+	projectile.velocity = dir * projectile_speed  # This should now work
+	
+	get_tree().current_scene.add_child(projectile)
+func Take_Damage(damage : int):
+	Health -= damage
+	if Health <= 0:
+		global_position = Vector2(69, 120)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y6dnq"]
+size = Vector2(10.000002, 13.6352215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17bms"]
+atlas = ExtResource("1_xyt0x")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1riem"]
+atlas = ExtResource("1_xyt0x")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcqw0"]
+atlas = ExtResource("1_xyt0x")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xyt0x"]
+atlas = ExtResource("1_y6dnq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6fa5"]
+atlas = ExtResource("1_y6dnq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxand"]
+atlas = ExtResource("1_y6dnq")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kuiq6"]
+atlas = ExtResource("1_y6dnq")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6a521"]
+atlas = ExtResource("1_y6dnq")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nigr"]
+atlas = ExtResource("1_y6dnq")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xyt0x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17bms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1riem")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hcqw0")
+}],
+"loop": true,
+"name": &"Dust",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xyt0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6fa5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxand")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kuiq6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a521")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nigr")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_um2y0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Acolyte" type="CharacterBody2D"]
+script = SubResource("GDScript_um2y0")
+projectile_speed = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -0.8176117)
+shape = SubResource("RectangleShape2D_y6dnq")
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4.7683716e-07)
+scale = Vector2(1.577726, 1.5776857)
+sprite_frames = SubResource("SpriteFrames_xyt0x")
+animation = &"Dust"
+autoplay = "default"
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+metadata/_edit_lock_ = true
