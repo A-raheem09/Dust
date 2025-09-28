@@ -52,6 +52,10 @@ func Respawn(x : int,y : int):
 	Healthbar.value = Acolyte.Health
 	PHealth.text = str(Acolyte.Health) + '/' + str(Acolyte.MaxHealth)
 	Acolyte.global_position = Vector2(x,y)
+
+
+func _on_next_level_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.
 "
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dwyiq"]
@@ -331,6 +335,7 @@ tile_set = SubResource("TileSet_dn5ey")
 
 [node name="Acolyte" parent="." instance=ExtResource("2_cove1")]
 position = Vector2(69, 120)
+projectile_speed = 400
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 
@@ -407,3 +412,4 @@ shape = SubResource("RectangleShape2D_mlbie")
 
 [connection signal="timeout" from="VoidMsg/Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="next level" to="." method="_on_next_level_body_entered"]

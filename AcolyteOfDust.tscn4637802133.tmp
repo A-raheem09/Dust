@@ -24,6 +24,7 @@ func _physics_process(delta):
 	# Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+
 	# Jump
 	if Input.is_action_just_pressed(\"Up\") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -64,14 +65,18 @@ func Take_Damage(damage : int):
 func absorb_attack():
 	var absorb_range = 10  # example range
 	var facing_dir = (1 if facing_right else -1)  # assume player tracks facing direction
-	var rel = enemy.global_position - global_position
-	# Check if enemy is roughly in front and within range
-	if facing_dir * rel.x > 0 and abs(rel.x) < absorb_range:
-		# Enemy is in front and close enough
-		$AnimatedSprite2D.play('Dust')
-		var heal_amount = enemy.max_hp / 5
-		Health = min(Health + heal_amount, MaxHealth)
-		enemy.queue_free()  # kill the enemy
+	for enemy in drops:
+		var rel = enemy.global_position - global_position
+		# Check if enemy is roughly in front and within range
+		if facing_dir * rel.x > 0 and abs(rel.x) < absorb_range:
+			# Enemy is in front and close enough
+			var heal_amount = enemy.max_hp / 5
+			Health = min(Health + heal_amount, MaxHealth)
+			enemy.queue_free()  # kill the enemy
+			break
+func _process(delta) -> void:
+	if global_position > Vector2(0.0,700):
+		global_position = Vector2(69,120)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6dnq"]
@@ -163,7 +168,6 @@ animations = [{
 
 [node name="Acolyte" type="CharacterBody2D"]
 script = SubResource("GDScript_um2y0")
-projectile_speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -0.8176117)

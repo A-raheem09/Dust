@@ -331,6 +331,7 @@ tile_set = SubResource("TileSet_dn5ey")
 
 [node name="Acolyte" parent="." instance=ExtResource("2_cove1")]
 position = Vector2(69, 120)
+projectile_speed = null
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 

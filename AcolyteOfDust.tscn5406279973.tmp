@@ -69,9 +69,9 @@ func absorb_attack():
 	if facing_dir * rel.x > 0 and abs(rel.x) < absorb_range:
 		# Enemy is in front and close enough
 		$AnimatedSprite2D.play('Dust')
-		var heal_amount = enemy.max_hp / 5
-		Health = min(Health + heal_amount, MaxHealth)
-		enemy.queue_free()  # kill the enemy
+		var heal_amount = 5
+		Health = (Health + heal_amount)
+		queue_free()  # kill the enemy
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6dnq"]
@@ -163,7 +163,6 @@ animations = [{
 
 [node name="Acolyte" type="CharacterBody2D"]
 script = SubResource("GDScript_um2y0")
-projectile_speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -0.8176117)
