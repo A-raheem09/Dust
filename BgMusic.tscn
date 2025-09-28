@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://df2fp17joy4mo"]
+
+[ext_resource type="AudioStream" uid="uid://d3mdjxakdv1pe" path="res://Assets/Music/Toby-Fox-DELTARUNE-Chapters-3-4-OST-58-Hammer-of-Justice.wav" id="1_nnno5"]
+[ext_resource type="Script" uid="uid://cnggfa706q8kv" path="res://bg_music.gd" id="2_nnno5"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_nnno5")
+autoplay = true
+script = ExtResource("2_nnno5")

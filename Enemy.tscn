@@ -1,10 +1,12 @@
-[gd_scene load_steps=46 format=3 uid="uid://biegm44dnyogc"]
+[gd_scene load_steps=49 format=3 uid="uid://biegm44dnyogc"]
 
 [ext_resource type="Texture2D" uid="uid://djmjn83560exy" path="res://Assets/Skeleton/skeledeath.png" id="1_qp131"]
 [ext_resource type="Texture2D" uid="uid://c8638oekx8u2x" path="res://Assets/Skeleton/skelewalk.png" id="2_6do27"]
 [ext_resource type="Texture2D" uid="uid://bkv2oneha5xpa" path="res://Assets/Skeleton/skelepunch2.png" id="3_rvmyp"]
 [ext_resource type="Texture2D" uid="uid://cjbxvb7iecrfb" path="res://Assets/Skeleton/SkeleIdle.png" id="4_2nxwx"]
 [ext_resource type="Texture2D" uid="uid://coaofmjxbhe00" path="res://Assets/Skeleton/skeledust.png" id="5_52xpa"]
+[ext_resource type="Texture2D" uid="uid://dajnibjwqn4xk" path="res://Assets/MiniHpBar.png" id="6_rvmyp"]
+[ext_resource type="Texture2D" uid="uid://cix08dxh8fk3o" path="res://Assets/MiniHpBarBG.png" id="7_2nxwx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jdgko"]
 atlas = ExtResource("1_qp131")
@@ -303,15 +305,34 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nenbi"]
 size = Vector2(12, 20)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_52xpa"]
+size = Vector2(12, 20)
+
+[node name="Skele" type="CharacterBody2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ir673")
-animation = &"dust"
 autoplay = "default"
-frame_progress = 0.26266438
+frame_progress = 0.6656413
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nenbi")
+metadata/_edit_lock_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_52xpa")
+metadata/_edit_lock_ = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -8.0
+offset_top = -21.0
+offset_right = 8.0
+offset_bottom = -5.0
+value = 100.0
+texture_over = ExtResource("6_rvmyp")
+texture_progress = ExtResource("7_2nxwx")
 metadata/_edit_lock_ = true

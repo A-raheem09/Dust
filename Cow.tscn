@@ -1,7 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://b6fya726q4ytq"]
+[gd_scene load_steps=30 format=3 uid="uid://b6fya726q4ytq"]
 
 [ext_resource type="Texture2D" uid="uid://qxlyp4m4vplp" path="res://Assets/Cow/Cow-dust.png" id="1_cv0wc"]
+[ext_resource type="Script" uid="uid://60snmog3g73m" path="res://cow.gd" id="1_ydls3"]
 [ext_resource type="Texture2D" uid="uid://p08hsbjcmjek" path="res://Assets/Cow/Cow-sheet.png" id="2_ra332"]
+[ext_resource type="Texture2D" uid="uid://dajnibjwqn4xk" path="res://Assets/MiniHpBar.png" id="3_ifesx"]
+[ext_resource type="Texture2D" uid="uid://cix08dxh8fk3o" path="res://Assets/MiniHpBarBG.png" id="4_ydls3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ifesx"]
 atlas = ExtResource("1_cv0wc")
@@ -171,14 +174,34 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s2wyw"]
 size = Vector2(25, 18)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twmtf"]
+size = Vector2(25, 18)
+
+[node name="Cow" type="CharacterBody2D"]
+script = ExtResource("1_ydls3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kh5dm")
 animation = &"Dusted"
 autoplay = "idle"
-frame_progress = 0.9247751
+frame_progress = 0.11640445
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_s2wyw")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_twmtf")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -9.0
+offset_top = -20.0
+offset_right = 7.0
+offset_bottom = -4.0
+value = 100.0
+texture_over = ExtResource("3_ifesx")
+texture_progress = ExtResource("4_ydls3")
+metadata/_edit_lock_ = true

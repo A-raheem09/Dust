@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c37vtb6tex17"]
+
+[ext_resource type="Script" uid="uid://c4lhsufmeoo66" path="res://plagueball.gd" id="1_cv4a8"]
+[ext_resource type="Texture2D" uid="uid://bsvltlerjjklu" path="res://Assets/Acolyte/Plagueball.png" id="2_cv4a8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_47nub"]
+radius = 4.0
+
+[node name="Plagueball" type="CharacterBody2D"]
+script = ExtResource("1_cv4a8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_47nub")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_cv4a8")

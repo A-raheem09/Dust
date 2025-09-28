@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://3goj1co2dl3p"]
+
+[ext_resource type="Texture2D" uid="uid://ipva38lnq8bn" path="res://Assets/Orc with shadows/Orc-Idle.png" id="1_vu5tg"]
+[ext_resource type="Texture2D" uid="uid://dajnibjwqn4xk" path="res://Assets/MiniHpBar.png" id="2_macxp"]
+[ext_resource type="Texture2D" uid="uid://cix08dxh8fk3o" path="res://Assets/MiniHpBarBG.png" id="3_eyhpr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utad2"]
+size = Vector2(7, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3s2j4"]
+atlas = ExtResource("1_vu5tg")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nebt"]
+atlas = ExtResource("1_vu5tg")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixvp6"]
+atlas = ExtResource("1_vu5tg")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mq4fs"]
+atlas = ExtResource("1_vu5tg")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7r1m"]
+atlas = ExtResource("1_vu5tg")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3x2od"]
+atlas = ExtResource("1_vu5tg")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gut4f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3s2j4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nebt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixvp6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mq4fs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7r1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3x2od")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Goblin" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_utad2")
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gut4f")
+frame_progress = 0.89983135
+metadata/_edit_lock_ = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -7.0
+offset_top = -20.0
+offset_right = 9.0
+offset_bottom = -4.0
+value = 100.0
+texture_over = ExtResource("2_macxp")
+texture_progress = ExtResource("3_eyhpr")
+metadata/_edit_lock_ = true
